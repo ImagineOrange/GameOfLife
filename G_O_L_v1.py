@@ -7,6 +7,7 @@ Created on Mon Dec 21 21:54:53 2020
 """
 
 #conways game of life 
+import matplotlib.pyplot as plt
 import time
 import random
 import copy
@@ -16,8 +17,15 @@ from termcolor import colored
 alive = colored('#','cyan')
 HEIGHT = 15
 WIDTH = 30
+deadFlag = False
+dead_count = 0
 
+prev_cells = []
 Cells = []
+generations_x = []
+death_points = []
+breakloop_counter = 0
+
 for x in range (WIDTH):
     column=[]
     for y in range (HEIGHT):
@@ -29,7 +37,7 @@ for x in range (WIDTH):
     generations = 1
     breakloop = True #breaks loop when gen hits 150
     
-while breakloop: #main loop
+while breakloop_counter != 200: #main loop
     print("\n\n")
     print("    *** Generation", generations,"***",)
     print('\n\n')
@@ -43,7 +51,7 @@ while breakloop: #main loop
         
         print() #newline printed at the end of row (HEIGHT)
     print("********************************",end='')
-    
+    dead_count = 0
     for x in range (WIDTH):
         for y in range (HEIGHT):
             #GET NEIGHBORING COORDS
@@ -77,12 +85,44 @@ while breakloop: #main loop
                 Cells[x][y] = alive
             else: 
                 Cells[x][y] = ' '
+            
+            if Cells[x][y] == ' ':
+                dead_count += 1
+            
+    if Cells == prev_cells:
+        death_points.append(generations)
+        Cells = []
+        for x in range (WIDTH):
+           column=[]
+           for y in range (HEIGHT):
+               if random.randint(0,1)==0:
+                   column.append(alive) #Appends a living cell
+               else:
+                   column.append(' ') #Appends a dead cell 
+           Cells.append(column)
+           generations = 1
+        breakloop += 1
+        
+        
+    prev_cells = copy.deepcopy(Cells)
+    
+    if dead_count == WIDTH*HEIGHT:
+        death_points.append(generations)
+        Cells = []
+        for x in range (WIDTH):
+            column=[]
+            for y in range (HEIGHT):
+                if random.randint(0,1)==0:
+                    column.append(alive) #Appends a living cell
+                else:
+                    column.append(' ') #Appends a dead cell 
+            Cells.append(column)
+            generations = 1
+        breakloop += 1
                 
 
     generations+=1
-    time.sleep(.2)
-    if generations == 251:
-        breakloop = False
+    time.sleep(.05)
   
     # os.system('clear')   #possible clearing animation, clears last frame
 
