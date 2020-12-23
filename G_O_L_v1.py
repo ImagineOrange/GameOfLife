@@ -7,7 +7,6 @@ Created on Mon Dec 21 21:54:53 2020
 """
 
 #conways game of life 
-import matplotlib.pyplot as plt
 import time
 import random
 import copy
@@ -23,21 +22,24 @@ dead_count = 0
 prev_cells = []
 Cells = []
 generations_x = []
+generations = 0
 death_points = []
-breakloop_counter = 0
+breakloop = 0
 
-for x in range (WIDTH):
-    column=[]
-    for y in range (HEIGHT):
-        if random.randint(0,1)==0:
-            column.append(alive) #Appends a living cell
-        else:
-            column.append(' ') #Appends a dead cell 
-    Cells.append(column)
-    generations = 1
-    breakloop = True #breaks loop when gen hits 150
+#function for generating new configuration 
+def generate(WIDTH, HEIGHT):
+    for x in range (WIDTH):
+            column=[]
+            for y in range (HEIGHT):
+                if random.randint(0,1)==0:
+                    column.append(alive) #Appends a living cell
+                else:
+                    column.append(' ') #Appends a dead cell 
+            Cells.append(column)
+            
+generate(WIDTH, HEIGHT)
     
-while breakloop_counter != 200: #main loop
+while breakloop != 200: #main loop
     print("\n\n")
     print("    *** Generation", generations,"***",)
     print('\n\n')
@@ -88,47 +90,30 @@ while breakloop_counter != 200: #main loop
             
             if Cells[x][y] == ' ':
                 dead_count += 1
-            
+    #Tests for static generations
     if Cells == prev_cells:
         death_points.append(generations)
-        Cells = []
-        for x in range (WIDTH):
-           column=[]
-           for y in range (HEIGHT):
-               if random.randint(0,1)==0:
-                   column.append(alive) #Appends a living cell
-               else:
-                   column.append(' ') #Appends a dead cell 
-           Cells.append(column)
-           generations = 1
+        Cells.clear()
+        currentCells.clear()
+        generate(WIDTH,HEIGHT)
+        generations_x.append(generations)
+        generations = 1
         breakloop += 1
         
-        
+    #Establishes generational data to be compared to during the next generation to test
+    #For staticness
     prev_cells = copy.deepcopy(Cells)
     
+    #Tests for dead generations
     if dead_count == WIDTH*HEIGHT:
         death_points.append(generations)
-        Cells = []
-        for x in range (WIDTH):
-            column=[]
-            for y in range (HEIGHT):
-                if random.randint(0,1)==0:
-                    column.append(alive) #Appends a living cell
-                else:
-                    column.append(' ') #Appends a dead cell 
-            Cells.append(column)
-            generations = 1
+        Cells.clear()
+        currentCells.clear()
+        generate(WIDTH, HEIGHT)
+        generations_x.append(generations)
+        generations = 1
         breakloop += 1
                 
 
     generations+=1
-    time.sleep(.05)
-  
-    # os.system('clear')   #possible clearing animation, clears last frame
-
-print("\n\n\n\n        ~~~Good-Job~!!!~~~")
-
-#autosizing via width constant 
-#see if can add ZONE DEAD
-#find a way to animate
-#experiment - investigate possible ranges of generations for failure - are there ranges moire likely to fail?
+    time.sleep(.2)
