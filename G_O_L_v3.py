@@ -57,16 +57,16 @@ while breakloop != ITERATIONS: #main program loop --- breakloop incremented by +
     print('\n\n')
     currentCells = copy.deepcopy(Cells) #currentCells copies initial Cells array, undergoes testing
    
-    ##########################################
-    print("********************************")
-    for y in range (HEIGHT):
-        print("*", end='')
-        for x in range (WIDTH):
-            print (currentCells[x][y],end='') #print the # or ' '     # <---- main output block
-        print("*", end='')
-        print() #newline printed at the end of row (HEIGHT)
-    print("********************************",end='')
-    ##########################################
+    # ##########################################
+    # print("********************************")
+    # for y in range (HEIGHT):
+    #     print("*", end='')
+    #     for x in range (WIDTH):
+    #         print (currentCells[x][y],end='') #print the # or ' '     # <---- main output block
+    #     print("*", end='')
+    #     print() #newline printed at the end of row (HEIGHT)
+    # print("********************************",end='')
+    # ##########################################
    
     dead_count = 0
     
