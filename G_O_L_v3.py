@@ -12,6 +12,7 @@ import time
 import random
 import copy
 from termcolor import colored
+import matplotlib as plt
 
 ITERATIONS = int(input("Note: New configuration generated upon dead/static grid.\nDesired number of configurations: "))
 GEN_CAP = int(input("Input generation cap: "))
@@ -33,9 +34,9 @@ def stats(death_points,generations_x): #
     if len(generations_x)>0:
         print("\nThe generation numbers: ",generations_x)
     
-# Add some cool matplotlib functionality 
-#
-#
+    plt.hist(generations_x, color = 'blue', edgecolor = 'black',    #generate histogram of gen numbers
+         bins = int(200))
+    
 
 #function for generating new configuration 
 def generate(WIDTH, HEIGHT):
