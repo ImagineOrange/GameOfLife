@@ -32,8 +32,6 @@ def stats(death_points,generations_x): #
     print("There were", len(death_points), 'dead or static configurations. ')
     if len(generations_x)>0:
         print("\nThe generation numbers: ",generations_x)
-    else:
-        print("\nNo static or dead configurations. ")
     
 # Add some cool matplotlib functionality 
 #
