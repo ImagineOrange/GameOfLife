@@ -8,6 +8,7 @@ Created on Mon Dec 21 21:54:53 2020
 
 #conways game of life 
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import time
 import random
 import copy
@@ -42,10 +43,26 @@ def reset():
     Cells.clear()
     currentCells.clear()
     generate(WIDTH,HEIGHT)
+    
+def animate(i):
+    xar = []
+    yar = []
+    for x_nums in generations_x:
+        xar.append(int(x_nums))
+        
+    for gen_num in generations_x:
+        y_num = generations_x.count(gen_num)
+        yar.append(int(y_num))
+        
+    ax1.clear()
+    ax1.plot(xar,yar)
             
 generate(WIDTH, HEIGHT)
+
+fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
     
-while breakloop != 500: #main loop
+while breakloop != 10: #main loop
     currentCells = copy.deepcopy(Cells)
     dead_count = 0
     for x in range (WIDTH):
@@ -91,7 +108,7 @@ while breakloop != 500: #main loop
         generations_x.append(generations)
         generations = 1
         breakloop += 1
-        
+      
     #Establishes generational data to be compared to during the next generation to test
     #For staticness
     prev_cells = copy.deepcopy(Cells)
@@ -107,9 +124,13 @@ while breakloop != 500: #main loop
     if generations >= 800:
         reset()
         generations = 1
-    
+        
     generations+=1
-    #time.sleep(.02)
+    time.sleep(.02)
+
+print("Calculations completed")
+ani = animation.FuncAnimation(fig, animate, interval = 5)
+plt.show()
 print("Done")
-plt.hist(generations_x, color = 'blue', edgecolor = 'black',
-         bins = int(200))
+
+
