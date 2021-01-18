@@ -13,8 +13,8 @@ col_grid = (30,30,60) #grey ish
 
 def main(width,height,cellsize):
     pygame.init() #initialize pygame
-    surface = pygame.display.set_mode((width*cellsize,height*cellsize)) #set dimensions of board and cellsize -  WIDTH X HEIGHT
-    pygame.display.set_caption("Game of Life")
+    surface = pygame.display.set_mode((width*cellsize,height*cellsize)) #set dimensions of board and cellsize -  WIDTH X HEIGHT    ~ special display surface
+    pygame.display.set_caption("GOL_F")
     cells = init(width,height) #passes width and height to init game
     while True:
         for event in pygame.event.get(): #event loop: script will quit if user exits window
@@ -39,7 +39,7 @@ def update(surface,cells,cellsize,width,height):
             next_[r, c] = 1
             col = col_alive
         col = col if cells[r, c] == 1 else col_background #dead cells are background color
-        pygame.draw.rect(surface, col, (r*cellsize, c*cellsize, cellsize-1, cellsize-1)) #draw new surface
+        pygame.draw.rect(surface, col, (r*cellsize, c*cellsize, cellsize-1, cellsize-1)) #draw new cell ~ pygame.draw.rect(screen, color, (x,y,width,height)
     t.sleep(.01) #wait 0.1 seconds
     return next_
 
@@ -71,3 +71,7 @@ def alive_neighbors(cells,r,c,width,height):
 
 
 main(120,90,8)
+
+
+
+#only update changing cells using dirty rect animation https://www.pygame.org/docs/tut/newbieguide.html
