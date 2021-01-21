@@ -13,8 +13,8 @@ col_grid = (30,30,60) #grey ish
 col_born = (140,255,117)#alive!
 
 def main(width,height,cellsize):
-    path = input("\nr/s: ")
-    if path == 'r' or path == 's':
+    path = input("\nr/s/p: ")
+    if path == 'r' or path == 's' or path =='p':
         pygame.init() #initialize pygame
         surface = pygame.display.set_mode((width*cellsize,height*cellsize)) #set dimensions of board and cellsize -  WIDTH X HEIGHT    ~ special display surface
         pygame.display.set_caption("GOL_F")
@@ -31,13 +31,13 @@ def main(width,height,cellsize):
         exit()
 
 def init(width,height,path):
+    cells = np.zeros((width,height))
     if path == 's':
-        cells = np.zeros((width,height))
         pattern = np.array([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
-                            [1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],          #glider pattern
+                            [1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],          #Gosper glider gun pattern
                             [1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -45,7 +45,14 @@ def init(width,height,path):
         pos = (3,3)
         cells[pos[0]:pos[0]+pattern.shape[0], pos[1]:pos[1]+pattern.shape[1]] = pattern #magic
         return cells
-    if path == 'r':
+
+    elif path == 'p':
+        pattern = np.array([[0, 1, 1], [1, 1, 0], [0, 1, 0]]); #R-pentamino
+        pos = (52,45)
+        cells[pos[0]:pos[0]+pattern.shape[0], pos[1]:pos[1]+pattern.shape[1]] = pattern #magic
+        return cells
+
+    elif path == 'r':
         cells = np.asarray(np.random.randint(0,2,(width,height))) #initialize random seed
         return cells
 
@@ -96,7 +103,7 @@ def alive_neighbors(cells,r,c,width,height):
     return neighbors
 
 
-main(110,70,9)
+main(115,75,9)
 
 
 #only update changing cells using dirty rect animation https://www.pygame.org/docs/tut/newbieguide.html
