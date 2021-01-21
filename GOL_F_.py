@@ -59,15 +59,15 @@ def update(surface,cells,cellsize,width,height):
             next_[r, c] = 1
             col = col_alive
         elif (cells[r, c] == 0) and (nearby_alive == 3):  #cell is born
-            next_[r,c] = 2
+            next_[r,c] = 2 #born cells will be grn
         elif (cells[r, c] == 2) and (nearby_alive < 2) or (nearby_alive > 3): #born
             col = col_to_die
         elif (cells[r, c] == 2) and (2 <= nearby_alive or nearby_alive <= 3):  #if cell alive, an nearby is less or equal 3, OR cell dead and nearby alive equal 3 - birth
             next_[r, c] = 1
-            col = col_born
+            col = col_born #grn
 
         col = col if cells[r, c] == 1 or cells[r, c] == 2 else col_background #dead cells are background color
-        pygame.draw.rect(surface, col, (r*cellsize, c*cellsize, cellsize-1, cellsize-1)) #draw new cell ~ pygame.draw.rect(screen, color, (x,y,width,height)
+        pygame.draw.circle(surface, col, (r*cellsize, c*cellsize),4) #draw new cell ~ pygame.draw.rect(screen, color, (x,y,width,height)
     return next_
 
 def alive_neighbors(cells,r,c,width,height):
@@ -96,7 +96,7 @@ def alive_neighbors(cells,r,c,width,height):
     return neighbors
 
 
-main(120,80,8)
+main(110,70,9)
 
 
 #only update changing cells using dirty rect animation https://www.pygame.org/docs/tut/newbieguide.html
