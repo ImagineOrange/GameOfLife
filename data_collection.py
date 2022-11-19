@@ -10,12 +10,9 @@ def tylers_particles():
     x_coords = []
     y_coords = []
 
-    # cnx = mysql.connector.connect(user='meyercts_meyerct', password=',{xHc6evSy-b',
-    #                               host='gator3315.hostgator.com', database='meyercts_particle_data')
+    
     try:
-        cnx = mysql.connector.connect(user='meyercts_meyerct', password='WS_ZVp^sI)x@',
-                                      host='gator3315.hostgator.com', database='meyercts_particle_data')
-        selector = cnx.cursor()
+       
         query = ("SELECT x_coord FROM `data_table`")
         selector.execute(query)
         for x_coord in selector:
